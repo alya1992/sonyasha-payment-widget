@@ -840,7 +840,8 @@
             ? '<img src="' + CONFIG.logoUrl + '" alt="Sonyasha Toys" class="sonyasha-logo">'
             : '';
 
-        const payButtonHtml = CONFIG.showPayButton
+        // Pay button only on mobile
+        const payButtonHtml = (CONFIG.showPayButton && isMobile())
             ? '<a href="' + data.deeplinkUrl + '" class="sonyasha-pay-button">' +
               PAY_BUTTON_ICON + ' Сплатити</a>'
             : '';
