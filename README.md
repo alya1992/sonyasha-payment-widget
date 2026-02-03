@@ -93,6 +93,69 @@ SonyashaPaymentQR.init();
 - izibank
 - Глобус
 
+## Horoshop Integration
+
+For Horoshop e-commerce platform, add this code to your thank-you page:
+
+```html
+<div id="sonyasha-payment-widget">&nbsp;</div>
+<script src="https://cdn.jsdelivr.net/gh/alya1992/sonyasha-payment-widget@main/payment-widget.min.js"></script>
+<script>
+(function() {
+    function initWidget() {
+        var text = document.body.innerText;
+        var orderMatch = text.match(/(?:Замовлення|Order)[^\d]*(\d+)/i);
+        var orderId = orderMatch ? orderMatch[1] : null;
+
+        var amountMatches = text.match(/(\d[\d\s,\.]*)\s*грн/g);
+        var amount = null;
+        if (amountMatches && amountMatches.length > 0) {
+            var lastAmount = amountMatches[amountMatches.length - 1];
+            amount = parseFloat(lastAmount.replace(/[^\d,\.]/g, '').replace(',', '.'));
+        }
+
+        if (!orderId || !amount) return false;
+
+        SonyashaPaymentQR.configure({
+            recipientName: 'ФОП Прізвище Імʼя По-батькові',
+            iban: 'UA123456789012345678901234567',
+            taxId: '1234567890',
+            showBankSelection: true
+        });
+
+        var deeplinkUrl = SonyashaPaymentQR.buildDeeplinkUrl(orderId, amount);
+        SonyashaPaymentQR.renderWidget('#sonyasha-payment-widget', orderId, amount, deeplinkUrl);
+        return true;
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        if (!initWidget()) {
+            var observer = new MutationObserver(function(mutations, obs) {
+                if (initWidget()) obs.disconnect();
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+            setTimeout(function() { observer.disconnect(); initWidget(); }, 3000);
+        }
+    } else {
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!initWidget()) {
+                var observer = new MutationObserver(function(mutations, obs) {
+                    if (initWidget()) obs.disconnect();
+                });
+                observer.observe(document.body, { childList: true, subtree: true });
+                setTimeout(function() { observer.disconnect(); initWidget(); }, 3000);
+            }
+        });
+    }
+})();
+</script>
+```
+
+**Important:** Replace the placeholder credentials with your real data:
+- `recipientName`: Your ФОП or company name
+- `iban`: Your Ukrainian IBAN (29 characters)
+- `taxId`: Your ЄДРПОУ or ІПН
+
 ## How It Works
 
 1. Widget parses page DOM to find order ID and amount
@@ -104,8 +167,8 @@ SonyashaPaymentQR.init();
 
 | File | Size | Use Case |
 |------|------|----------|
-| `payment-widget.min.js` | 104KB | **Production** |
-| `payment-widget.js` | 132KB | Development/Debugging |
+| `payment-widget.min.js` | 82KB | **Production** |
+| `payment-widget.js` | 110KB | Development/Debugging |
 
 ## Features
 

@@ -24,9 +24,9 @@
      * Widget configuration - must be set before use
      */
     const CONFIG = {
-        recipientName: 'ФОП Вітвіцька Анастасія Сергіївна',
-        iban: 'UA723220010000026002360009669',
-        taxId: '3363403087',
+        recipientName: '',  // Set via configure()
+        iban: '',           // Set via configure()
+        taxId: '',          // Set via configure()
         purposePrefix: 'За інтернет замовлення',
         // DOM selectors for e-commerce page
         orderIdSelector: '.h2',
