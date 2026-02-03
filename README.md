@@ -56,9 +56,9 @@ SonyashaPaymentQR.init();
     <script src="https://cdn.jsdelivr.net/gh/alya1992/sonyasha-payment-widget@main/payment-widget.min.js"></script>
     <script>
     SonyashaPaymentQR.configure({
-        recipientName: 'ФОП Вітвіцька Анастасія Сергіївна',
-        iban: 'UA723220010000026002360009669',
-        taxId: '3363403087',
+        recipientName: 'ФОП Прізвище Імʼя По-батькові',
+        iban: 'UA123456789012345678901234567',
+        taxId: '1234567890',
         purposePrefix: 'За інтернет замовлення'
     });
     SonyashaPaymentQR.init();
