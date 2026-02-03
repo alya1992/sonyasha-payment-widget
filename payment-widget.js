@@ -845,6 +845,11 @@
               PAY_BUTTON_ICON + ' Сплатити</a>'
             : '';
 
+        // Build bank selection HTML if enabled and on mobile
+        const bankSelectionHtml = (CONFIG.showBankSelection && isMobile())
+            ? buildBankSelectionHtml(data.deeplinkUrl)
+            : '';
+
         return '<div class="sonyasha-payment-card">' +
             '<div class="sonyasha-payment-header">' + logoHtml + '</div>' +
             '<div class="sonyasha-payment-body">' +
@@ -857,6 +862,7 @@
                     '<div class="sonyasha-qr-loading"><div class="sonyasha-spinner"></div></div>' +
                 '</div>' +
                 payButtonHtml +
+                bankSelectionHtml +
             '</div>' +
             '<div class="sonyasha-payment-footer">' +
                 '<div class="sonyasha-details-title">Реквізити</div>' +
@@ -1082,6 +1088,11 @@
 
         // Render QR code
         renderQr('#' + getQrContainerId(), deeplinkUrl);
+
+        // Initialize bank selection event listeners if enabled
+        if (CONFIG.showBankSelection && isMobile()) {
+            initBankSelection(container);
+        }
     }
 
     /**
