@@ -186,3 +186,4 @@ Chrome 60+, Firefox 55+, Safari 11+, Edge 79+, iOS Safari 11+, Chrome for Androi
 ## License
 
 MIT License
+
